@@ -33,12 +33,14 @@ export const AuthProvider = ({ children }) => {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     }
-    let response = axios.post(`${baseURL}/auth/token/`, params, config);
-    let data = response.json();
+    let response = await axios.post(`${baseURL}/auth/token/`, params, config);
+    console.log(response);
+    let data = await response.data;
     if (response.status === 200) {
-      localStorage.setItem("authToken", data.access);
+      console.log(data.access_token);
+      localStorage.setItem("authToken", data.access_token);
       localStorage.setItem("tokenType", data.token_type);
-      setUser(jwt_decode(data.access));
+      setUser(jwt_decode(data.access_token));
       setMessage("");
       navigate("/");
     } else if (response.status === 401) {
