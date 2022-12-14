@@ -5,25 +5,30 @@ import PrivateRoute from "./utils/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
 import { NotesProvider } from "./context/NotesContext";
 import { Container } from "@material-ui/core";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import { theme } from "./theme";
 
 function App() {
   return (
-    <Container>
-      <Router>
-        <AuthProvider>
-          <Routes>
-            <Route path="/" element={
-              <PrivateRoute>
-                <NotesProvider>
-                  <HomePage />
-                </NotesProvider>
-              </PrivateRoute>
-            } />
-            <Route element={<LoginPage />} path="/login" />
-          </Routes>
-        </AuthProvider>
-      </Router>
-    </Container>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Container>
+        <Router>
+          <AuthProvider>
+            <Routes>
+              <Route path="/" element={
+                <PrivateRoute>
+                  <NotesProvider>
+                    <HomePage />
+                  </NotesProvider>
+                </PrivateRoute>
+              } />
+              <Route element={<LoginPage />} path="/login" />
+            </Routes>
+          </AuthProvider>
+        </Router>
+      </Container>
+    </ThemeProvider>
   );
 }
 
