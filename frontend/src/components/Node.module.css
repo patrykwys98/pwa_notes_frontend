@@ -6,10 +6,6 @@
   padding-inline-end: 8px;
 }
 
-.root.isSelected {
-  color: #1967d2;
-}
-
 .expandIconWrapper {
   align-items: center;
   font-size: 0;
@@ -28,4 +24,58 @@
 
 .labelGridItem {
   padding-inline-start: 8px;
+}
+
+.inputWrapper {
+  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: flex-start;
+}
+
+.textField input {
+  font-size: 14px;
+  padding: 6px 0;
+}
+
+.editButton {
+  padding: 6px;
+}
+
+.editIcon {
+  font-size: 20px;
+}
+
+.nodeInput {
+  width: 200px;
+}
+
+.nodeLabel {
+  padding-right: 15px;
+}
+
+
+.app {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
+.current {
+  background-color: #f3f3f3;
+  margin: 8px;
+  padding: 8px;
+}
+
+.currentLabel {
+  font-weight: bold;
+  margin-inline-start: 0.5em;
+}
+
+.draggingSource {
+  opacity: 0.3;
+}
+
+.dropTarget {
+  background-color: #e8f0fe;
 }

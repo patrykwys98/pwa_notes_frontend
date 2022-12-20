@@ -10,6 +10,7 @@ import Editor from "../components/Editor";
 import { Node } from "../components/Node";
 import { CustomDragPreview } from "../components/CustomDragPreview";
 import styles from "./home.module.css";
+import AddFirstNote from "../components/AddFirstNote";
 
 function App() {
 
@@ -33,9 +34,9 @@ function App() {
   const parser = (data) => {
     return data.map((note) => {
       return {
-        id: note.id,
-        parent: formatParentId(note.id, note.child_id),
-        text: note.title,
+        id: note?.id,
+        parent: formatParentId(note?.id, note?.child_id),
+        text: note?.title,
         droppable: true,
       };
     });
@@ -44,9 +45,9 @@ function App() {
   const unparser = (data) => {
     return data.map((note) => {
       return {
-        id: note.id,
-        child_id: note.parent === 0 ? null : note.parent,
-        title: note.text,
+        id: note?.id,
+        child_id: note?.parent === 0 ? null : note.parent,
+        title: note?.text,
       };
     });
   };
@@ -84,12 +85,12 @@ function App() {
     if (treeData.length > 0) {
       updateTreeStructure();
     }
-  }, [treeData, handleDrop, !selectedNode]);
+  }, [treeData, handleDrop]);
 
 
   return (
     <>
-      {treeData.length > 0 && (
+      {treeData.length > 0 ? (
         <DndProvider backend={MultiBackend} options={getBackendOptions()}>
           <Tree
             tree={treeData}
@@ -102,6 +103,7 @@ function App() {
                 isSelected={node.id === selectedNode?.id}
                 onToggle={onToggle}
                 onSelect={handleSelect}
+                getNotes={getNotes}
               />
             )}
             dragPreviewRender={(monitorProps) => (
@@ -109,15 +111,16 @@ function App() {
             )}
             onDrop={handleDrop}
             classes={{
+              root: styles.treeRoot,
               draggingSource: styles.draggingSource,
               dropTarget: styles.dropTarget
             }}
           />
         </DndProvider>
+      ) : (
+        <AddFirstNote getNotes={getNotes} />
       )}
-      {activeNote &&
-        <Editor activeNote={activeNote} />
-      }
+      {activeNote && <Editor activeNote={activeNote} />}
     </>
   );
 }
