@@ -31,8 +31,11 @@ const EditorActions = ({ activeNote }) => {
     <Grid>
       <Button onClick={handleUpdateNote}>Save</Button>
       <Button onClick={handleOpenDialog}>Share</Button>
-      <ShareNoteDialog note_id={activeNote.id} open={openDialog} handleClose={handleCloseDialog} />
-
+      <ShareNoteDialog
+        note_id={activeNote.id}
+        open={openDialog}
+        handleClose={handleCloseDialog}
+      />
     </Grid>
   )
 }

@@ -13,14 +13,6 @@ import { CustomDragPreview } from "../components/CustomDragPreview";
 import styles from "./home.module.css";
 import AddFirstNote from "../components/AddFirstNote";
 import EditorActions from "../components/EditorActions";
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import Paper from '@mui/material/Paper';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Typography from '@mui/material/Typography';
-import DraftsIcon from '@mui/icons-material/Drafts';
-import SendIcon from '@mui/icons-material/Send';
-import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import SharedNotesMenu from "../components/SharedNotes/SharedNotesMenu";
 
 function App() {
@@ -32,6 +24,7 @@ function App() {
   const [activeNote, setActiveNote] = useState({});
 
   const [selectedNode, setSelectedNode] = useState(null);
+  const [selectedNote, setSelectedNote] = useState(null);
   const handleSelect = (node) => setSelectedNode(node);
 
   const formatParentId = (noteId, childId) => {
@@ -68,20 +61,22 @@ function App() {
     const response = await axios.get("/note/get-notes-and-shared-notes/");
     setTreeData(parser(response.data.notes));
     setSharedNotes(response.data.shared);
-    console.log("shared notes", sharedNotes);
   }
 
   const getNote = async (noteId) => {
+    console.log("getNote", noteId);
     const response = await axios.get(`/note/get-note/${noteId}/`);
-    setActiveNote(response.data);
+    if (response.data) {
+      setActiveNote(response.data);
+    }
   }
 
   useEffect(() => {
+    console.log("selectedNode", selectedNode);
     if (selectedNode) {
       getNote(selectedNode.id);
     }
   }, [selectedNode]);
-
 
   const updateTreeStructure = async () => {
     await axios.post("/note/update-tree-structure/", unparser(treeData));
@@ -132,7 +127,7 @@ function App() {
       ) : (
         <AddFirstNote getNotes={getNotes} />
       )}
-      <SharedNotesMenu sharedNotes={sharedNotes} setActiveNote={setActiveNote} getNote={getNote} />
+      <SharedNotesMenu sharedNotes={sharedNotes} setSelectedNode={setSelectedNode} />
       {activeNote && <>
         <EditorActions activeNote={activeNote} />
         <Editor activeNote={activeNote} />

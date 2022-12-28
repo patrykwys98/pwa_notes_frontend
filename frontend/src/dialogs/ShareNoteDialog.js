@@ -33,17 +33,6 @@ const ShareNoteDialog = ({ open, handleClose, note_id }) => {
   }
 
   useEffect(() => {
-    console.log("Closing nigga")
-    setCanEdit(false)
-    setCanView(false)
-    setCanDelete(false)
-    setCanShare(false)
-    setErrorMessage('')
-    setUsers([])
-    setSelectedUsers([])
-  }, [handleClose])
-
-  useEffect(() => {
     getUsers()
   }, [])
 
@@ -74,6 +63,10 @@ const ShareNoteDialog = ({ open, handleClose, note_id }) => {
     }
     await axios.post('/share/share-note/', data)
       .then(response => {
+        if (response.status === 200) {
+          setErrorMessage('')
+          setLoading(false)
+        }
         handleClose()
       })
       .catch(error => {
@@ -86,7 +79,7 @@ const ShareNoteDialog = ({ open, handleClose, note_id }) => {
       <DialogTitle>
         Share a note
       </DialogTitle>
-      {loading ? <p> Loading...</p> : (
+      {loading && !selectedUsers ? <p> Loading...</p> : (
         <>
           <DialogContent>
             <Autocomplete
