@@ -195,7 +195,6 @@ export const Node = (props) => {
             <IconButton className={styles.editButton} onClick={handleShowDelete}>
               <DeleteIcon className={styles.editIcon} />
             </IconButton>
-
           </div>
         )}
       </div>
