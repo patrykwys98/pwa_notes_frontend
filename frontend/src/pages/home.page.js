@@ -24,10 +24,10 @@ function App() {
   const [activeNote, setActiveNote] = useState({});
 
   const [selectedNode, setSelectedNode] = useState(null);
-  const [selectedNote, setSelectedNote] = useState(null);
   const handleSelect = (node) => setSelectedNode(node);
 
   const formatParentId = (noteId, childId) => {
+    console.log("formatParentId", noteId, childId)
     if (childId === null || childId === undefined) {
       return 0;
     } else if (noteId === childId) {
@@ -37,6 +37,7 @@ function App() {
   }
 
   const parser = (data) => {
+    console.log("parser", data)
     return data.map((note) => {
       return {
         id: note?.id,
@@ -48,6 +49,7 @@ function App() {
   };
 
   const unparser = (data) => {
+    console.log("unparser", data)
     return data.map((note) => {
       return {
         id: note?.id,
@@ -59,34 +61,36 @@ function App() {
 
   const getNotes = async () => {
     const response = await axios.get("/note/get-notes-and-shared-notes/");
+    console.log("Setting tree data and shared notes")
     setTreeData(parser(response.data.notes));
     setSharedNotes(response.data.shared);
   }
 
   const getNote = async (noteId) => {
-    console.log("getNote", noteId);
     const response = await axios.get(`/note/get-note/${noteId}/`);
-    if (response.data) {
-      setActiveNote(response.data);
-    }
+    setActiveNote(response.data);
   }
 
   useEffect(() => {
     console.log("selectedNode", selectedNode);
     if (selectedNode) {
+      console.log("getting note")
       getNote(selectedNode.id);
     }
   }, [selectedNode]);
 
   const updateTreeStructure = async () => {
+    console.log("updateTreeStructure")
     await axios.post("/note/update-tree-structure/", unparser(treeData));
   }
 
   useEffect(() => {
+    console.log("getting notes")
     getNotes();
   }, []);
 
   useEffect(() => {
+    console.log("updating tree structure")
     if (treeData.length > 0) {
       updateTreeStructure();
     }

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from '@material-ui/core';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
@@ -16,10 +17,9 @@ import useAxios from '../utils/useAxios';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const ShareNoteDialog = ({ open, handleClose, note_id }) => {
+const ShareNoteDialog = ({ open, handleClose, note_id, can_edit, can }) => {
 
   const axios = useAxios()
-
 
   //! Getting users for the autocomplete
   const [users, setUsers] = React.useState([])
@@ -34,25 +34,18 @@ const ShareNoteDialog = ({ open, handleClose, note_id }) => {
 
   useEffect(() => {
     getUsers()
-  }, [])
+  }, [open])
 
-  //! Handle priviledges for the selected userr
+  //! Handle priviledges for the selected user
   const [canEdit, setCanEdit] = React.useState(false)
   const [canView, setCanView] = React.useState(false)
   const [canDelete, setCanDelete] = React.useState(false)
   const [canShare, setCanShare] = React.useState(false)
   const [errorMessage, setErrorMessage] = React.useState('')
 
-  useEffect(() => {
-    console.log(selectedUsers)
-  }, [selectedUsers])
-
-  useEffect(() => {
-    console.log(errorMessage)
-  }, [errorMessage])
-
   //! Handle share note
   const handleShareNote = async () => {
+    console.log(note_id)
     const data = {
       note_id: note_id,
       user_id: selectedUsers.map(user => user.id),
