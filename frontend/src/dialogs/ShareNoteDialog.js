@@ -17,7 +17,7 @@ import useAxios from '../utils/useAxios';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const ShareNoteDialog = ({ open, handleClose, note_id, can_edit, can }) => {
+const ShareNoteDialog = ({ open, handleClose, note_id }) => {
 
   const axios = useAxios()
 
