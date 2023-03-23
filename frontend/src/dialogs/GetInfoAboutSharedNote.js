@@ -30,9 +30,7 @@ const GetInfoAboutSharedNote = ({ open, noteId, handleClose }) => {
 
 
   const getInfoAboutSharedNote = async () => {
-    console.log('getInfoAboutSharedNote')
     const response = await axios.get(`/share/get-share-info-about-note/${noteId}/`)
-    console.log(response.data)
     setInfoAboutSharedNote(response.data)
   }
 
@@ -60,7 +58,9 @@ const GetInfoAboutSharedNote = ({ open, noteId, handleClose }) => {
   }
 
   useEffect(() => {
-    console.log('useEffect')
+    if (!open) {
+      return
+    }
     getInfoAboutSharedNote()
     setLoading(false)
   }, [open])

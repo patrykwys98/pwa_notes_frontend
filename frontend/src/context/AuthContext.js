@@ -33,18 +33,33 @@ export const AuthProvider = ({ children }) => {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     }
-    let response = await axios.post(`${baseURL}/auth/token/`, params, config);
-    console.log(response);
+    let response = await axios.post(`${baseURL}/auth/token`, params, config).catch((error) => {
+      setMessage(error.response.data.detail);
+      return error.response;
+    });
     let data = await response.data;
     if (response.status === 200) {
-      console.log(data.access_token);
       localStorage.setItem("authToken", data.access_token);
       localStorage.setItem("tokenType", data.token_type);
       setUser(jwt_decode(data.access_token));
       setMessage("");
       navigate("/");
-    } else if (response.status === 401) {
-      setMessage("Invalid username or password");
+    } else {
+      console.log(data.detail);
+      setMessage(data.detail);
+    }
+  }
+
+  let registerUser = async ({ email, password }) => {
+    let response = await axios.post(`${baseURL}/user/create-user`, { email, password }).catch((error) => {
+      setMessage(error.response.data.detail);
+      return error.response;
+    });
+    let data = await response.data;
+    if (response.status === 200) {
+      navigate("/login");
+    } else {
+      setMessage(data.detail);
     }
   }
 
@@ -67,6 +82,7 @@ export const AuthProvider = ({ children }) => {
     baseURL: baseURL,
     message: message,
     setMessage: setMessage,
+    registerUser: registerUser
   }
 
 

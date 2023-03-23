@@ -4,7 +4,6 @@ import AuthContext from "../context/AuthContext";
 
 export const PrivateRoute = ({ children }) => {
   let { user } = useContext(AuthContext);
-  console.log(user);
   if (user) {
     return children;
   }

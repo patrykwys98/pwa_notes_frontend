@@ -45,7 +45,6 @@ const ShareNoteDialog = ({ open, handleClose, note_id }) => {
 
   //! Handle share note
   const handleShareNote = async () => {
-    console.log(note_id)
     const data = {
       note_id: note_id,
       user_id: selectedUsers.map(user => user.id),

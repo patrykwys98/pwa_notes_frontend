@@ -8,7 +8,7 @@ export const CustomDragPreview = (props) => {
   return (
     <div className={styles.root}>
       <div className={styles.icon}>
-        <TypeIcon droppable={item.droppable} fileType={item?.data?.fileType} />
+        <TypeIcon />
       </div>
       <div className={styles.label}>{item.text}</div>
     </div>

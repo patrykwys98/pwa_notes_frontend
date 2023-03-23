@@ -60,7 +60,6 @@ export const Node = (props) => {
   const [newNoteTitle, setNewNoteTitle] = useState("");
 
   const handleNewNoteTitle = (e) => {
-    console.log(id);
     setNewNoteTitle(e.target.value);
   };
 

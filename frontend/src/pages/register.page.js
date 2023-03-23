@@ -19,9 +19,9 @@ const validationSchema = yup.object({
     .required('Password is required'),
 });
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const { isOnline } = useContext(NetworkStatusContext);
-  let { loginUser, message } = useContext(AuthContext);
+  let { registerUser, message } = useContext(AuthContext);
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -29,7 +29,7 @@ const LoginPage = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (e) => {
-      loginUser(e);
+      registerUser(e);
     },
   });
 
@@ -77,4 +77,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
