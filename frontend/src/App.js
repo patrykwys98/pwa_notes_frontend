@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/login.page";
+import RegisterPage from "./pages/register.page";
+import HomePage from "./pages/home.page";
+import PrivateRoute from "./utils/PrivateRoute";
+import { AuthProvider } from "./context/AuthContext";
+import { NotesProvider } from "./context/NotesContext";
+import { NetworkStatusProvider } from "./context/NetworkStatusContext";
+import { Container } from "@material-ui/core";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import { theme } from "./theme";
+import Navbar from "./components/Navbar";
+
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <NotesProvider>
+        <Container>
+          <Router>
+            <AuthProvider>
+              <NetworkStatusProvider>
+                <Navbar />
+                <Routes>
+                  <Route path="/" element={
+                    <PrivateRoute>
+                      <HomePage />
+                    </PrivateRoute>
+                  } />
+                  <Route element={<LoginPage />} path="/login" />
+                  <Route element={<RegisterPage />} path="/register" />
+                </Routes>
+              </NetworkStatusProvider>
+            </AuthProvider>
+          </Router>
+        </Container>
+      </NotesProvider>
+    </ThemeProvider>
   );
 }
 
