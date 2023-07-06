@@ -3,11 +3,9 @@ import { AppBar, Toolbar, Button, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AuthContext from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import NetworkStatusContext from "../context/NetworkStatusContext";
 
 const Navbar: React.FC = () => {
   const { authToken, logoutUser } = useContext(AuthContext);
-  const { isOnline } = useContext(NetworkStatusContext);
   const navigate = useNavigate();
 
   const goToRegister = () => {
@@ -19,13 +17,13 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <IconButton edge="start" color="inherit">
-          <MenuIcon />
-        </IconButton>
-        <div style={{ flexGrow: 1 }}></div>
-        {isOnline ? (
+    <>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton edge="start" color="inherit">
+            <MenuIcon />
+          </IconButton>
+          <div style={{ flexGrow: 1 }}></div>
           <>
             {authToken ? (
               <Button color="inherit" onClick={logoutUser}>
@@ -42,11 +40,10 @@ const Navbar: React.FC = () => {
               </>
             )}
           </>
-        ) : (
-          <h1>Offline mode</h1>
-        )}
-      </Toolbar>
-    </AppBar>
+        </Toolbar>
+      </AppBar>
+      <div style={{ height: "20px" }}></div> {/* Add desired spacing */}
+    </>
   );
 };
 

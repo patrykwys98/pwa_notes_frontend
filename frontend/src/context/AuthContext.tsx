@@ -65,7 +65,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setMessage("");
       navigate("/");
     } catch (error) {
-      setMessage(error.response.data.detail || error.message);
+      if (error.response) {
+        const { status } = error.response;
+        if (status === 403) {
+          setMessage("Invalid credentials");
+        } else if (status === 500) {
+          setMessage("An internal server error occurred");
+          logoutUser();
+        }
+      } else {
+        setMessage("An error occurred");
+      }
     }
   };
 

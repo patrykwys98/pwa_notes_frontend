@@ -3,7 +3,6 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import NetworkStatusContext from "../context/NetworkStatusContext";
 import AuthContext from "../context/AuthContext";
 
 interface FormValues {
@@ -23,7 +22,6 @@ const validationSchema = yup.object({
 });
 
 const LoginPage: React.FC = () => {
-  const { isOnline } = useContext(NetworkStatusContext);
   const { loginUser, message } = useContext(AuthContext);
 
   const formik = useFormik<FormValues>({
@@ -37,14 +35,8 @@ const LoginPage: React.FC = () => {
     },
   });
 
-  const offlineComponent = (
-    <div>
-      <h1>Offline</h1>
-    </div>
-  );
-
-  const onlineComponent = (
-    <div>
+  return (
+    <>
       <form onSubmit={formik.handleSubmit}>
         <TextField
           fullWidth
@@ -81,10 +73,8 @@ const LoginPage: React.FC = () => {
           helperText={message}
         />
       )}
-    </div>
+    </>
   );
-
-  return <>{isOnline ? onlineComponent : offlineComponent}</>;
 };
 
 export default LoginPage;

@@ -108,15 +108,6 @@ const EditorActions: React.FC<EditorActionsProps> = ({ activeNote }) => {
           Get info about shared note
         </Button>
       </Grid>
-      <Grid item>
-        <Button
-          variant="contained"
-          disabled={!canSaveToLocalStorage()}
-          onClick={saveToLocalStorage}
-        >
-          Save to offline edit
-        </Button>
-      </Grid>
       <ShareNoteDialog
         note_id={activeNote.id}
         open={openDialog}
