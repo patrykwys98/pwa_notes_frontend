@@ -31,7 +31,7 @@
     "react-dnd": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-editor-js": "^2.1.0",
-    "react-router-dom": "^6.4.4",
+    "react-router-dom": "^7.0.0",
     "react-scripts": "5.0.1",
     "react-search-box": "^2.3.0",
     "react-sortable-tree": "^2.8.0",
